@@ -5,7 +5,6 @@ import { JWT_SECRET } from "../config.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 
-
 export async function sendRecovery(email) {
     const user = await findByEmail(email)
     if (!user) {
@@ -13,7 +12,7 @@ export async function sendRecovery(email) {
     }
     const payload = { sub: user.id }
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '15min' })
-    const link = `http://localhost:5173/changepassword/?token=${token}`
+    const link = `${process.env.FRONTEND_LINK}changepassword/?token=${token}`
     
     const mail = {
         from: process.env.EMAIL_ACCOUNT,
